@@ -2,11 +2,11 @@
 
  An IRC logger
 
-# Requirement
+## Requirement
 1. Couchdb 3+
 2. Nodejs 12+ LTS
 
-# Setup
+## Setup
 1. Create Database
 ```
 curl -u admin:admin -X PUT http://localhost:5984/irc-hackthissite-dev
