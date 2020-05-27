@@ -1,9 +1,9 @@
-# IRC BOT
+# IRCd
 
-### An IRC logger
+ An IRC logger
 
 # Requirement
-1. Couchb 3+
+1. Couchdb 3+
 2. Nodejs 12+ LTS
 
 # Setup
