@@ -1,22 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>IRC Log</title>
-  </head>
 
-  <body>
-    <form action="/irc/logs">
-      <input type="text" name="date" placeholder="DD/MM/YYYY" />
-      <input type="submit" value="Check" />
-    </form>
-    
-    <div id="result">
-      <p> <% exampleRenderEjs.forEach((item)=>{%> 
-        <%= item %>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>IRC Log</title>
+</head>
+
+<body>
+  <form action="/irc/logs" method="GET">
+    <input type="text" name="date" placeholder="YYYY-MM-DD" />
+    <input type="text" name="channel" placeholder="#coffeesh0p" />
+    <input type="submit" value="Check" />
+  </form>
+
+  <div id="result">
+    <table>
+      <% exampleRenderEjs.forEach((item)=>{%>
+      <tr>
+        <td><%= item.at %></td>
+        <td><%= item.from %></td>
+        <td><%= item.to %></td>
+        <td><%= item.message %></td>
+      </tr>
       <% })%>
-    </div>
-  </body>
+    </table>
+  </div>
+</body>
+
 </html>
