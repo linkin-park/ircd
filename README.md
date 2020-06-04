@@ -33,6 +33,14 @@ node dist
 https://localhost:443/logs
 ```
 
+### Note
+
+- Generate self signed certificate (under ircd/src/priv_test)
+
+```
+openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -nodes
+```
+
 <!-- ```
 Top level modules
 npm ls -g --depth=0
