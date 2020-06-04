@@ -1,7 +1,7 @@
 import NodeCouchDb from "node-couchdb";
 import { dbconfig } from "./config";
 import { v4 } from "uuid";
-import { Chat } from "./protocol";
+import { Chat } from "../protocol/chat";
 import { rejects } from "assert";
 
 const couch = new NodeCouchDb({
@@ -42,7 +42,7 @@ export async function couchRetrieveOn(
   dateInNano: number,
   channel: string = "coffeesh0p"
 ): Promise<Array<Chat>> {
-  console.log(`what date? ${new Date(dateInNano)}`)
+  console.log(`what date? ${new Date(dateInNano)}`);
   const prevDate = new Date(dateInNano);
   prevDate.setDate(prevDate.getDate() - 1);
   const nextDate = new Date(dateInNano);
@@ -62,26 +62,29 @@ export async function couchRetrieveOn(
   const parameters = {};
 
   const datas: Array<Chat> = [];
- return couch.mango(dbconfig.db, mongoQuery, parameters).then(
-    ({ data, headers, status }) => {
-      // data is json response
-      // headers is an object with all response headers
-      // status is statusCode number
-      console.debug("Queried Mongo Query",mongoQuery)
-      // console.debug("db return Intended",data)
-      data.docs.forEach(({ datetime, from, to, message }) => {
-        datas.push({ at: datetime, from, to, message });
-      });
-      return datas;
-    },
-    (err: any) => {
-      // either request error occured
-      // ...or err.code=EDOCMISSING if document is missing
-      // ...or err.code=EUNKNOWN if statusCode is unexpected
+  return couch
+    .mango(dbconfig.db, mongoQuery, parameters)
+    .then(
+      ({ data, headers, status }) => {
+        // data is json response
+        // headers is an object with all response headers
+        // status is statusCode number
+        console.debug("Queried Mongo Query", mongoQuery);
+        // console.debug("db return Intended",data)
+        data.docs.forEach(({ datetime, from, to, message }) => {
+          datas.push({ at: datetime, from, to, message });
+        });
+        return datas;
+      },
+      (err: any) => {
+        // either request error occured
+        // ...or err.code=EDOCMISSING if document is missing
+        // ...or err.code=EUNKNOWN if statusCode is unexpected
+        throw err;
+      }
+    )
+    .catch((err: any) => {
+      console.debug("Something funky happened!", err);
       throw err;
-    }
-  ).catch((err: any) => {
-     console.debug('Something funky happened!' , err)
-     return err
     });
 }
