@@ -1,56 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>IRC Log</title>
-    <style>
-      .form-div {
-        display: block;
-      }
 
-      .form-submit {
-        background-color: mediumslateblue;
-        color: #fff;
-        text-decoration: none;
-        padding: 1em;
-        border: none;
-        cursor: pointer;
-      }
-    </style>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>IRC Log</title>
+  <style>
+    .form-div {
+      display: block;
+    }
 
-  <body>
-    <% if ( ejsInfo.errMsg && ejsInfo.errMsg.length > 0) { %>
-    <span style="color: red;"><%=ejsInfo.errMsg%></span>
-    <% } %>
+    .form-submit {
+      background-color: mediumslateblue;
+      color: #fff;
+      text-decoration: none;
+      padding: 1em;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
 
-    <form action="/irc/logs" method="GET">
-      <div class="form-div">
-        <label for="date">Date</label>
-        <input type="text" name="date" placeholder="YYYY-MM-DD" />
-      </div>
-      <div class="form-div">
-        <label for="channel">Channel</label>
-        <input type="text" name="channel" placeholder="#coffeesh0p" />
-      </div>
-      <div class="form-div">
-        <input class="form-submit" type="submit" value="Check" />
-      </div>
-    </form>
+<body>
+  <% if ( ejsInfo.errMsg && ejsInfo.errMsg.length > 0) { %>
+  <span style="color: red;"><%=ejsInfo.errMsg%></span>
+  <% } %>
 
-    <div id="result">
-      <table>
-        <% ejsInfo.data.forEach((item)=>{%>
-        <tr>
-          <td><%= item.at %></td>
-          <td><%= item.to %></td>
-          <td><%= item.from %></td>
-          <td><%= item.message %></td>
-        </tr>
-        <% })%>
-      </table>
+  <form action="/irc/logs" method="GET">
+    <div class="form-div">
+      <label for="date">Date</label>
+      <input type="text" name="date" placeholder="YYYY-MM-DD" />
     </div>
-  </body>
+    <div class="form-div">
+      <label for="channel">Channel</label>
+      <input type="text" name="channel" placeholder="#coffeesh0p" />
+    </div>
+    <div class="form-div">
+      <input class="form-submit" type="submit" value="Check" />
+    </div>
+  </form>
+
+  <a href="/logout">Logout</a>
+
+  <div id="result">
+    <table>
+      <% ejsInfo.data.forEach((item)=>{%>
+      <tr>
+        <td><%= item.at %></td>
+        <td><%= item.to %></td>
+        <td><%= item.from %></td>
+        <td><%= item.message %></td>
+      </tr>
+      <% })%>
+    </table>
+  </div>
+</body>
+
 </html>

@@ -1,7 +1,7 @@
 import NodeCouchDb from "node-couchdb";
 import { dbconfig } from "./config";
 import { v4 } from "uuid";
-import { Chat } from "../protocol/chat";
+import { Chat } from "../model/chat";
 import { rejects } from "assert";
 
 const couch = new NodeCouchDb({

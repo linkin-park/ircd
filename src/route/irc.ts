@@ -1,6 +1,6 @@
 import querystring from "querystring";
 import { couchRetrieveOn } from "../db/chatdev";
-import { ChatTO } from "../protocol/chat";
+import { ChatTO } from "../model/chat";
 import { FormatError } from "../custom_error/format";
 
 export async function retrieveLogs(uri: string | null): Promise<Array<ChatTO>> {
