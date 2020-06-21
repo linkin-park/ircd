@@ -66,16 +66,12 @@ sudo ln -s $(type -p node) /usr/bin/node
 
 ## TODO
 
-1. Authenticate login with github [x]
-2. Session Authentication by Express-Session. [x]
-3. Add Express and change code base. [x]
-4. Refactor.
+- [ ] Refactor.
+- [x] Authenticate login with github.
+- [x] Session Authentication by Express-Session.
+- [x] Add Express and change code base.
 
 ## Future
 
 1. Move to Redis Store from Memory Store.
-2. Move to PassportJS (depends)
-
-```
-
-```
+2. Move to PassportJS (depends).
