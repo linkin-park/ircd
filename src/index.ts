@@ -1,6 +1,7 @@
 import { retrieveLogs } from './route/irc'
 import { ChatTO } from './model/chat'
 import { FormatError } from './custom_error/format'
+import authorizationRouter from './route/oauth'
 
 import serverConfig from './config/server'
 
@@ -140,19 +141,21 @@ router.get('/logout', validateSessionMiddleware, (req: any, res) => {
   res.send(renderEJS(loginEJSHtmlContent, null))
 })
 
-router.get('/login', (req: any, res) => {
-  const session = req.session
-  store.get(session.id, (err, sess) => {
-    console.log(`Session`, sess)
-  })
-  console.log('Before User from Rq:', session.user, '\nId', session.id)
+// router.get('/login', (req: any, res) => {
+//   const session = req.session
+//   store.get(session.id, (err, sess) => {
+//     console.log(`Session`, sess)
+//   })
+//   console.log('Before User from Rq:', session.user, '\nId', session.id)
 
-  // Sample User
-  session.user = {}
+//   // get the damn email Id and userName
 
-  res.writeHead(307, { Location: '/irc/logs' })
-  res.end()
-})
+//   // Sample User
+//   session.user = {}
+
+//   res.writeHead(307, { Location: '/irc/logs' })
+//   res.end()
+// })
 
 router.get('/', (req: any, res: ServerResponse) => {
   const data = renderEJS(loginEJSHtmlContent, null)
@@ -163,6 +166,9 @@ router.get('/', (req: any, res: ServerResponse) => {
 
 // use this router for this path
 app.use('/', router)
+app.use('/login',authorizationRouter)
+//
+//
 
 httpsServer
   .setTimeout(serverConfig.server.timeout)

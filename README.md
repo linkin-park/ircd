@@ -30,7 +30,7 @@ node -r dotenv/config dist
 4. Visit
 
 ```
-https://localhost:443/logs
+https://localhost:8443/
 ```
 
 ### Mandatory
@@ -66,7 +66,7 @@ sudo ln -s $(type -p node) /usr/bin/node
 
 ## TODO
 
-1. Integrate with github via Passport.JS
+1. Authenticate login with github [x]
 2. Session Authentication by Express-Session. [x]
 3. Add Express and change code base. [x]
 4. Refactor.
@@ -74,6 +74,7 @@ sudo ln -s $(type -p node) /usr/bin/node
 ## Future
 
 1. Move to Redis Store from Memory Store.
+2. Move to PassportJS (depends)
 
 ```
 
