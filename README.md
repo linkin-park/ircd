@@ -46,7 +46,7 @@ openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -nodes
   ```
   NODE_ENV=DEV
 
-  SESSION_SECRET=AES 256 base64 encoded
+  SESSION_SECRET= cat /dev/urandom | tr -dc 'a-zA-Z0-9!#$%^&*()-_+=<,>.?/:;"' | fold -w 256 | head -n 1
   DB_NAME=irc-hackthissite-dev
   DB_USER=username
   DB_PASS=password
