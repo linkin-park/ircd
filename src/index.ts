@@ -2,6 +2,7 @@ import { retrieveLogs } from './route/irc'
 import { ChatTO } from './model/chat'
 import { FormatError } from './custom_error/format'
 import authorizationRouter from './route/oauth'
+import './bot/bot'
 
 import serverConfig from './config/server'
 
@@ -14,7 +15,7 @@ import url from 'url'
 import express from 'express'
 import session, { MemoryStore } from 'express-session'
 
-const { SERVER_PORT = 8443 } = process.env
+const { SERVER_PORT = 8443, SERVER_CERT_PEM, SERVER_PRIVATE_PEM } = process.env
 
 // when error escapes it reaches me
 process.on('uncaughtException', (err) => {
@@ -45,11 +46,16 @@ app.use(
   }),
 )
 
-// server handle atm
+// console.log(
+//   fs
+//     .readFileSync(path.join(__dirname, 'priv_test', 'cert.pem'))
+//     .toString('utf8'),
+// )
+
 const httpsServer = https.createServer(
   {
-    cert: fs.readFileSync(path.join(__dirname, 'priv_test', 'cert.pem')),
-    key: fs.readFileSync(path.join(__dirname, 'priv_test', 'key.pem')),
+    cert: SERVER_CERT_PEM?.replace(/\\n/gm, `\n`),
+    key: SERVER_PRIVATE_PEM?.replace(/\\n/gm, `\n`),
   },
   app,
 )
@@ -141,22 +147,6 @@ router.get('/logout', validateSessionMiddleware, (req: any, res) => {
   res.send(renderEJS(loginEJSHtmlContent, null))
 })
 
-// router.get('/login', (req: any, res) => {
-//   const session = req.session
-//   store.get(session.id, (err, sess) => {
-//     console.log(`Session`, sess)
-//   })
-//   console.log('Before User from Rq:', session.user, '\nId', session.id)
-
-//   // get the damn email Id and userName
-
-//   // Sample User
-//   session.user = {}
-
-//   res.writeHead(307, { Location: '/irc/logs' })
-//   res.end()
-// })
-
 router.get('/', (req: any, res: ServerResponse) => {
   const data = renderEJS(loginEJSHtmlContent, null)
 
@@ -166,7 +156,7 @@ router.get('/', (req: any, res: ServerResponse) => {
 
 // use this router for this path
 app.use('/', router)
-app.use('/login',authorizationRouter)
+app.use('/login', authorizationRouter)
 //
 //
 

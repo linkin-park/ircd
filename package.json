@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prod": "node dist",
-    "dev": "rm -fr dist/* && ./node_modules/.bin/tsc",
-    "postdev": "cp -r src/view src/priv_test dist",
+    "start": "npm run build && npm run prod",
+    "prod": "node -r dotenv/config dist",
+    "build": "rm -fr dist/* && ./node_modules/.bin/tsc",
+    "postbuild": "cp -r src/view dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
